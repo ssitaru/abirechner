@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Punktrechner f&uuml;r die Kursstufe BW &ndash; Hilfe</title>
+	<meta charset="UTF-8">
+	
+    <link rel="stylesheet" href="main.css"/>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('.expander').click(function(){
+			$('#'+$(this).attr('id')+'-expand').toggle(100);
+		});
+	});
+</script>
+    <h1>Punkterechner Abi '13 (BW) <span style="cursor: pointer" onclick="window.history.back()"><img src="images/back.png" style="padding-top: 5px; height: 28px; width: auto" alt="back icon" /></span></h1>
+    <div id="container">
+		<div id="main">
+			<h2>Hilfe/FAQ</h2>
+			<p>
+				Der Punkterechner fürs Abi 2013 in Baden-Württemberg bietet die Möglichkeit, Dir einen Überblick über deine Noten und mögliche Konstellationen von Kursen anzuschauen, um damit eine ungefähre Vorstellung Deiner späteren Abinote zu erhalten.
+			</p>
+			<p>
+				Falls Du Hilfe brauchst, findest Du im Folgenden ein FAQ. Bitte beachte, dass aufgrund der verwendeten Lizenz dieses Programm ohne jede Gewährleistung, jedoch in der Hoffnung, nützlich zu sein, bereitgestellt wird.
+			</p>
+			<h3 id="rechtliches" class="expander">1. Rechtliches</h3>
+			<div id="rechtliches-expand" class="expand">
+			<pre>
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.
+
+Dieses Programm ist Freie Software: Sie können es unter den Bedingungen
+der GNU General Public License, wie von der Free Software Foundation,
+Version 3 der Lizenz oder (nach Ihrer Option) jeder späteren
+veröffentlichten Version, weiterverbreiten und/oder modifizieren.
+
+Dieses Programm wird in der Hoffnung, dass es nützlich sein wird, aber
+OHNE JEDE GEWÄHRLEISTUNG, bereitgestellt; sogar ohne die implizite
+Gewährleistung der MARKTFÄHIGKEIT oder EIGNUNG FÜR EINEN BESTIMMTEN ZWECK.
+Siehe die GNU General Public License für weitere Details.
+
+Sie sollten eine Kopie der GNU General Public License zusammen mit diesem
+Programm erhalten haben. Wenn nicht, siehe <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.
+
+Die verwendeten Icons stammen aus dem <a href="http://tango.freedesktop.org/">Tango Icon Set</a> (Public Domain).
+
+Als JavaScript-Library wurde <a href="http://jquery.com">jQuery</a> benutzt.
+			</pre>
+			</div>
+			<h3 id="howto" class="expander">2. Wie benutze ich das?</h3>
+			<div id="howto-expand" class="expand">
+				<p>
+					Am einfachsten ist es, wenn Du (wie bei der Kurswahl) zunächst links deine ganzen Nebenkurse einträgst. Sobald Du einen ausgewählt hast, erscheint automatisch eine weitere Zeile. Danach solltest Du deine Kernfächer+Fremdsprache eintragen. Zuletzt kannst Du Deine Punkte, die Du bereits hast oder vorhersagst, eintragen. Die Felder aktualisieren sich automatisch. Links unten findest Du deine Punkte und Deine Abinote. Achte auch rechts unten auf den "Log", hier wirst Du auf falsche Eingaben aufmerksam gemacht (warum diese genau falsch sind kannst Du im <a href="http://www.kultusportal-bw.de/servlet/PB/show/1278168/Leitfaden_Abitur_2013_online.pdf">Leitfaden</a> nachlesen).
+				</p>
+				<p>
+			</div>
+			<h3 id="privacy" class="expander">3. Werden meine Daten gespeichert?</h3>
+			<div id="privacy-expand" class="expand">
+				<p>
+					Zu keinem Zeitpunkt findet eine Speicherung der Eingaben statt. Das komplette Programm läuft in Deinem Browser. Glaubst Du das nicht? Lade Dir einfach das zip von <a href="https://github.com/ssitaru/abirechner/zipball/master">hier</a> runter und öffne "main.html".
+				</p>
+			</div>
+			<h3 id="dev" class="expander">4. Ich bin Entwickler. Wo finde ich den Quellcode?</h3>
+			<div id="dev-expand" class="expand">
+				<p>
+					Cool, den Code findest Du <a href="https://github.com/ssitaru/abirechner">hier</a>.
+				</p>
+			</div>
+			<h3 id="contact" class="expander">5. Meinungen, Anregungen, Kritik?</h3>
+			<div id="contact-expand" class="expand">
+				<p>
+					Du möchtest mithelfen, dieses Programm zu verbessern?
+				</p>
+				<p>
+					Dann schreib mir eine Nachricht! Kontaktdaten findest Du <a href="http://sebastian.sitaru.eu/5-bio">hier</a>.
+				</p>
+			</div>
+		</div>
+		<div id="footer">
+			<div id="footer_l">Provided under the <a href="http://www.gnu.org/licenses/gpl-3.0-standalone.html">GPLv3</a> (<a href="https://github.com/ssitaru/abirechner">src</a>)</div>
+			<div id="footer_r">Copyright 2012 by <a href="http://sebastian.sitaru.eu">Sebastian Sitaru</a></div>
+			
+		</div>
+    </div>
+</body>
+</html>

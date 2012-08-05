@@ -17,7 +17,7 @@ body,html {
 
 }
 
-h1 {
+h1:not(.nostyle) {
     margin-left: auto;
     margin-right: auto;
     width: 940px;
@@ -99,7 +99,7 @@ h1 {
 	float: left;
 }
 
-a {
+#footer a {
 	text-decoration: none;
 	color: #fff;
 }
@@ -120,6 +120,16 @@ h3 {
     font-size: 1em;
     margin-top: 0px;
     margin-bottom: 10px;
+}
+
+h3.expander {
+	padding-top: 10px;
+	cursor: pointer;
+}
+
+.expand {
+	padding-left: 15px;
+	display: none;
 }
 
 pre {

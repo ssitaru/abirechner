@@ -215,14 +215,14 @@ BlockI.prototype.check = function() {
 			}
 			if(!b_allOK)
 			{
-				$('#pre_log').append('<div class="problem">[!] Alle 8 naturwissenschaftlichen Kurse m&uuml;ssen ausgew&auml;hlt werden</div>');
+				$('#pre_log').append('<div class="problem">[!] BlockI: Alle 8 naturwissenschaftlichen Kurse m&uuml;ssen ausgew&auml;hlt werden</div>');
 			}
 		} else {
 			//$('#pre_log').append('<div class="normal">[i] 2. Kernfach ist NW</div>');
 		}
 		
 	} else { // keine NW als Kern
-		$('#pre_log').append('<div class="normal">[i] Keine NW als Kernfach</div>');
+		//$('#pre_log').append('<div class="normal">[i] Keine NW als Kernfach</div>');
 		var o_bioAsNF = isFachIn(this.nebenfacher, 'bio');
 		var o_chAsNF = isFachIn(this.nebenfacher, 'ch');
 		var o_phAsNF = isFachIn(this.nebenfacher, 'ph');
@@ -239,7 +239,7 @@ BlockI.prototype.check = function() {
 		if(f_isOK(o_bioAsNF) && f_isOK(o_phAsNF)) b_allOK = true;
 		if(f_isOK(o_chAsNF) && f_isOK(o_phAsNF)) b_allOK = true;
 		if(!b_allOK) {
-			$('#pre_log').append('<div class="problem">[!] 2x4 naturwiss. Kurse m&uuml;ssen gew&auml;hlt werden</div>');
+			$('#pre_log').append('<div class="problem">[!] BlockI: 2x4 naturwiss. Kurse m&uuml;ssen gew&auml;hlt werden</div>');
 		}
 	}
     
@@ -247,7 +247,7 @@ BlockI.prototype.check = function() {
     // -> SK
     var o_isFachIn = isFachIn(this.nebenfacher, 'sk');
     if(o_isFachIn.result != false){
-      $("#pre_log").append('<div class="normal">[i] SK vorhanden, entweder als Kurs oder mdl. Pr&uuml;fung</div>');
+      $("#pre_log").append('<div class="normal">[i] BlockI: SK vorhanden, entweder als Kurs oder mdl. Pr&uuml;fung</div>');
     
       $('#kres_n'+(o_isFachIn.i+1)+'-3_include').removeAttr('checked');
       $('#kres_n'+(o_isFachIn.i+1)+'-3_include').attr('disabled', true);
