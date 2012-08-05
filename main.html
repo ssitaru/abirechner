@@ -2,6 +2,8 @@
 <html>
 <head>
     <title>Punktrechner f&uuml;r die Kursstufe BW</title>
+	<meta charset="UTF-8">
+	
     <link rel="stylesheet" href="main.css"/>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script type="text/javascript" src="logic.js"></script>
@@ -132,16 +134,19 @@
             $(targ).find('.placeholder').remove();
             
             
-            // remove the selected option in other <selects>
+// TODO: remove the selected option in other <selects>
             //$(targ).addClass('changed');
            // var selected_v = $(targ).find('option:selected').val();
             //$('select.sel_neben[class!="changed"] option[value="'+selected_v+'"]').remove();
             //$(targ).removeClass('changed');
+
+			// if already a <leer> stuff exists, dont add a new one
+			if($('.placeholder').length == 0)
+			{
+				addNeben();
+			}
             
-            
-            addNeben();
             recalc();
-            
         }
         
         function selFs_changed(e)
@@ -154,13 +159,13 @@
         <div id="block1">
             <h2>Block I</h2>
             <h3>Leistungen aus den Kursen</h3>
-            <table id="t_blk1kernfaecher" width="100%">
+            <table id="t_blk1kernfaecher" style="width: 100%">
                 <colgroup>
-                    <col width="30%" />
-                    <col width="17.5%"/>
-                    <col width="17.5%"/>
-                    <col width="17.5%"/>
-                    <col width="17.5%"/>
+                    <col style="width: 30%" />
+                    <col style="width: 17.5%"/>
+                    <col style="width: 17.5%"/>
+                    <col style="width: 17.5%"/>
+                    <col style="width: 17.5%"/>
                 </colgroup>
                 <thead>
                     <tr>
@@ -172,50 +177,50 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="space"/>
+                    <tr class="space"><td></td><td></td><td></td><td></td><td></td></tr>
                     <tr>
                         <td>Deutsch</td>
-                        <td class="td_pktsel"><select id="kres_de1" class="sel_punkte"><input type="checkbox" checked disabled/></td>
-                        <td class="td_pktsel"><select id="kres_de2" class="sel_punkte"><input type="checkbox" checked disabled/></td>
-                        <td class="td_pktsel"><select id="kres_de3" class="sel_punkte"><input type="checkbox" checked disabled/></td>
-                        <td class="td_pktsel"><select id="kres_de4" class="sel_punkte"><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_de1" class="sel_punkte"></select><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_de2" class="sel_punkte"></select><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_de3" class="sel_punkte"></select><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_de4" class="sel_punkte"></select><input type="checkbox" checked disabled/></td>
                     </tr>
                     <tr>
                         <td>Mathe</td>
-                        <td class="td_pktsel"><select id="kres_ma1" class="sel_punkte"><input type="checkbox" checked disabled/></td>
-                        <td class="td_pktsel"><select id="kres_ma2" class="sel_punkte"><input type="checkbox" checked disabled/></td>
-                        <td class="td_pktsel"><select id="kres_ma3" class="sel_punkte"><input type="checkbox" checked disabled/></td>
-                        <td class="td_pktsel"><select id="kres_ma4" class="sel_punkte"><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_ma1" class="sel_punkte"></select><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_ma2" class="sel_punkte"></select><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_ma3" class="sel_punkte"></select><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_ma4" class="sel_punkte"></select><input type="checkbox" checked disabled/></td>
                     </tr>
                     <tr>
                         <td>[FS] <select id="kfach_fs" class="sel_spr"></select></td>
-                        <td class="td_pktsel"><select id="kres_fs1" class="sel_punkte"><input type="checkbox" checked disabled/></td>
-                        <td class="td_pktsel"><select id="kres_fs2" class="sel_punkte"><input type="checkbox" checked disabled/></td>
-                        <td class="td_pktsel"><select id="kres_fs3" class="sel_punkte"><input type="checkbox" checked disabled/></td>
-                        <td class="td_pktsel"><select id="kres_fs4" class="sel_punkte"><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_fs1" class="sel_punkte"></select><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_fs2" class="sel_punkte"></select><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_fs3" class="sel_punkte"></select><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_fs4" class="sel_punkte"></select><input type="checkbox" checked disabled/></td>
                     </tr>
                     <tr>
                         <td>[Kern1] <select id="kfach_k1" class="sel_kern1"></select></td>
-                        <td class="td_pktsel"><select id="kres_k1-1" class="sel_punkte"><input type="checkbox" checked disabled/></td>
-                        <td class="td_pktsel"><select id="kres_k1-2" class="sel_punkte"><input type="checkbox" checked disabled/></td>
-                        <td class="td_pktsel"><select id="kres_k1-3" class="sel_punkte"><input type="checkbox" checked disabled/></td>
-                        <td class="td_pktsel"><select id="kres_k1-4" class="sel_punkte"><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_k1-1" class="sel_punkte"></select><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_k1-2" class="sel_punkte"></select><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_k1-3" class="sel_punkte"></select><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_k1-4" class="sel_punkte"></select><input type="checkbox" checked disabled/></td>
                     </tr>
                     <tr>
                         <td>[Kern2] <select id="kfach_k2" class="sel_kern2"></select></td>
-                        <td class="td_pktsel"><select id="kres_k2-1" class="sel_punkte"><input type="checkbox" checked disabled/></td>
-                        <td class="td_pktsel"><select id="kres_k2-2" class="sel_punkte"><input type="checkbox" checked disabled/></td>
-                        <td class="td_pktsel"><select id="kres_k2-3" class="sel_punkte"><input type="checkbox" checked disabled/></td>
-                        <td class="td_pktsel"><select id="kres_k2-4" class="sel_punkte"><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_k2-1" class="sel_punkte"></select><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_k2-2" class="sel_punkte"></select><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_k2-3" class="sel_punkte"></select><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_k2-4" class="sel_punkte"></select><input type="checkbox" checked disabled/></td>
                     </tr>
                     <tr class="_nebenfach">
                         <td>[Neben1] <select id="kfach_n1" class="sel_neben"></select></td>
-                        <td class="td_pktsel"><select id="kres_n1-1" class="sel_punkte"><input type="checkbox" class="_recalc_on_change" id="kres_n1-1_include" checked/></td>
-                        <td class="td_pktsel"><select id="kres_n1-2" class="sel_punkte"><input type="checkbox" class="_recalc_on_change" id="kres_n1-2_include" checked/></td>
-                        <td class="td_pktsel"><select id="kres_n1-3" class="sel_punkte"><input type="checkbox" class="_recalc_on_change" id="kres_n1-3_include" checked/></td>
-                        <td class="td_pktsel"><select id="kres_n1-4" class="sel_punkte"><input type="checkbox" class="_recalc_on_change" id="kres_n1-4_include" checked/></td>
+                        <td class="td_pktsel"><select id="kres_n1-1" class="sel_punkte"></select><input type="checkbox" class="_recalc_on_change" id="kres_n1-1_include" checked/></td>
+                        <td class="td_pktsel"><select id="kres_n1-2" class="sel_punkte"></select><input type="checkbox" class="_recalc_on_change" id="kres_n1-2_include" checked/></td>
+                        <td class="td_pktsel"><select id="kres_n1-3" class="sel_punkte"></select><input type="checkbox" class="_recalc_on_change" id="kres_n1-3_include" checked/></td>
+                        <td class="td_pktsel"><select id="kres_n1-4" class="sel_punkte"></select><input type="checkbox" class="_recalc_on_change" id="kres_n1-4_include" checked/></td>
                     </tr>
-                    <tr class="space"/>
+                    <tr class="space"><td></td><td></td><td></td><td></td><td></td></tr>
                     <tr class="tr_ruleabove">
                         <td class="strong">[Gesamt]</td>
                         <td class="td_pktsel strong" id="kres_hj1">150</td>
@@ -223,7 +228,7 @@
                         <td class="td_pktsel strong" id="kres_hj3">150</td>
                         <td class="td_pktsel strong" id="kres_hj4">150</td>
                     </tr>
-                    <tr class="space"/>
+                    <tr class="space"><td></td><td></td><td></td><td></td><td></td></tr>
                 </tbody>
             </table>
         </div>
@@ -290,6 +295,11 @@
 </pre>
         </div>
         <div class="t_clear"></div>
+		<div id="footer">
+			<div id="footer_l">Provided under the <a href="http://www.gnu.org/licenses/gpl-3.0-standalone.html">GPLv3</a></div>
+			<div id="footer_r">Copyright 2012 by <a href="http://sebastian.sitaru.eu">Sebastian Sitaru</a></div>
+			
+		</div>
     </div>
 </body>
 </html>

@@ -14,8 +14,6 @@ body,html {
     
     
     padding-top: 0px;
-    
-    
 
 }
 
@@ -78,6 +76,39 @@ h1 {
     background-color: #c9c9c9;
 }
 
+#footer {
+	background-color: #555;
+	color: #fff;
+	width: 100%;
+	height: 40px;
+	margin-top: 20px;
+	font-size: 0.9em;
+}
+
+#footer div {
+	margin-top: 9px;
+	margin-right: 7px;
+	margin-left: 7px;
+}
+
+#footer_r {
+	float: right;
+}
+
+#footer_l {
+	float: left;
+}
+
+a {
+	text-decoration: none;
+	color: #fff;
+}
+
+a:hover {
+	color: #FAAC58;
+}
+
+
 h2 {
     font-variant: small-caps;
     font-size: 1.7em;
@@ -92,10 +123,15 @@ h3 {
 }
 
 pre {
-    text-align: justify;
     padding-left: 0;
     margin-left: 0;
     font-size: 1.1em;
+
+	white-space: pre-wrap; /* css-3 */
+	white-space: -moz-pre-wrap !important; /* Mozilla, since 1999 */
+	white-space: -pre-wrap; /* Opera 4-6 */
+	white-space: -o-pre-wrap; /* Opera 7 */
+	word-wrap: break-word; /* Internet Explorer 5.5+ */
 }
 
 .t_left {
@@ -120,7 +156,7 @@ pre {
 
 .problem {
     font-weight: bold;
-    color: red;
+    color: #cc0001;
 }
 
 /*
