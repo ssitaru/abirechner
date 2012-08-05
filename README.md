@@ -6,7 +6,7 @@ Grundlage war der [Leitfaden fürs Abitur 2013](http://www.kultusportal-bw.de/se
 
 Installation
 ------------
-Einfach irgendwo reinkopieren und loslegen. Getestet mit Chrome v21 (Win7).
+Einfach irgendwo reinkopieren und loslegen. Getestet mit Chrome v21 (Win7, Mac OS X 10.7).
 
 
 Hintergründe
@@ -14,5 +14,5 @@ Hintergründe
 * JS-basierter Code (logic.js) mit sehr vielen interaktiven Elementen
 * Einzige benutzte Library ist jQuery von den Google Servern
 * Notenskala wurde eins zu eins vom Leitfaden übernommen (ein großes if-elseif in noten.js)
-* FG-Code ist HTML5, noch nicht validiert
+* FG-Code ist HTML5 (W3C valid)
 * CSS ist in main.css, selbsterklärend
