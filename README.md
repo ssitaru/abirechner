@@ -2,7 +2,7 @@ Punkterechner fürs Abi 2012 in BW
 =================================
 
 Ein kleines Testprojekt, einfach Eure Noten eingeben und es sollte einen Einblick in Eure Abinote geben.
-Grundlage war der [Leitfaden fürs Abitur 2013](http://www.kultusportal-bw.de/servlet/PB/show/1278168/Leitfaden_Abitur_2013_online.pdf).
+Grundlage war der [Leitfaden fürs Abitur 2013](http://www.kultusportal-bw.de/servlet/PB/show/1278168/Leitfaden_Abitur_2013_online.pdf). Es ist lizensiert unter der GNU GPL v3.
 
 Installation
 ------------
