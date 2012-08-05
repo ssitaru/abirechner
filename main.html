@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Punktrechner f&uuml;r die Kursstufe BW</title>
+    <link rel="stylesheet" href="main.css"/>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="logic.js"></script>
+    <script type="text/javascript" src="noten.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        var o_blkI;
+        var o_blkII;
+        var ctr_nebenfach = 1;
+        
+        $(document).ready(function(){
+            initSelect(document);
+            o_blkI = new BlockI($("#block1"));
+            o_blkII = new BlockII($("#block2"));
+        
+            
+            $("#kfach_fs").change(selFs_changed);
+            $("._recalc_on_change").change(recalc);
+            recalc();
+            });
+        
+        function initSelect(root)
+        {
+            // init the sel_punkte stuff
+            var s = '';
+            for(var i = 15; i >= 0; i--) {
+                s += '<option value="'+i+'">'+i+'</option>';
+            }
+            $(root).find("select.sel_punkte").html(s);
+            $(root).find("select.sel_punkte").change(recalc);
+            
+            // init the sel_spr stuff
+            var s = '';
+            s += '<option value="en">Englisch</option>';
+            s += '<option value="fr">Franz</option>';
+            s += '<option value="ru">Russisch</option>';
+            $(root).find("select.sel_spr").html(s);
+            $(root).find("select.sel_spr").change(recalc);
+            
+            // init the sel_kern1 stuff
+            var s = '';
+            s += '<option value="bio">Biologie</option>';
+            s += '<option value="ch">Chemie</option>';
+            s += '<option value="ph">Physik</option>';
+            s += '<option value="en">Englisch</option>';
+            s += '<option value="fr">Franz</option>';
+            s += '<option value="ru">Russisch</option>';
+            $(root).find("select.sel_kern1").html(s);
+            $(root).find("select.sel_kern1").change(recalc);
+            
+            // init the sel_kern1 stuff
+            var s = '';
+            s += '<option value="bk">BK</option>';
+            s += '<option value="mu">Musik</option>';
+            s += '<option value="ge">Geschichte</option>';
+            s += '<option value="ek">Erdkunde</option>';
+            s += '<option value="gk">GK</option>';
+            s += '<option value="ws">Wirtschaft</option>';
+            s += '<option value="bio">Biologie</option>';
+            s += '<option value="ch">Chemie</option>';
+            s += '<option value="ph">Physik</option>';
+            $(root).find("select.sel_kern2").html(s);
+            $(root).find("select.sel_kern2").change(recalc);
+            
+            // init the sel_neben stuff
+            var s = '';
+            s += '<option class="placeholder">&lt;leer&gt;</option>';
+            s += '<option value="ch">Chemie</option>';
+            s += '<option value="bio">Biologie</option>';
+            s += '<option value="bk">BK/Mu</option>';
+            s += '<option value="inf">Informatik</option>';
+            s += '<option value="sp">Sport</option>';
+            s += '<option value="ek">EK/GK</option>';
+            s += '<option value="ge">Geschi</option>';
+            s += '<option value="rel">Reli/Ethik</option>';
+            s += '<option value="sk">SK</option>';
+            s += '<option value="as">Astro</option>';
+            s += '<option value="ph">Phil</option>';
+            s += '<option value="ps">Psych</option>';
+            $(root).find("select.sel_neben").html(s);
+            $(root).find("select.sel_neben").change(selNeben_changed);
+        }
+        
+        function recalc()
+        {
+            o_blkI.check();
+            o_blkII.check();
+            
+            var blkI_punkte = o_blkI.getTotal();
+            var blkII_punkte = o_blkII.getTotal();
+            
+            $("#d_pktblk1").text(blkI_punkte);
+            $("#d_pktblk2").text(blkII_punkte);
+            $("#d_pktgesamt").text(blkII_punkte+blkI_punkte);
+            $("#d_notegesamt").text(getNoteByPunkte(blkII_punkte+blkI_punkte));
+            
+            $("._recalc_on_change").off('change');
+            $("._recalc_on_change").change(recalc);
+        }
+        
+        function addNeben()
+        {
+            ctr_nebenfach++;
+            var i = ctr_nebenfach;
+            var s = '';
+            s += '<tr class="_nebenfach">';
+            s += '<td>[Neben'+i+'] <select id="kfach_n'+i+'" class="sel_neben"></select></td>';
+            s += '<td class="td_pktsel"><select id="kres_n'+i+'-1" class="sel_punkte"><input type="checkbox" class="_recalc_on_change" id="kres_n'+i+'-1_include" checked/></td>';
+            s += '<td class="td_pktsel"><select id="kres_n'+i+'-2" class="sel_punkte"><input type="checkbox" class="_recalc_on_change" id="kres_n'+i+'-2_include" checked/></td>';
+            s += '<td class="td_pktsel"><select id="kres_n'+i+'-3" class="sel_punkte"><input type="checkbox" class="_recalc_on_change" id="kres_n'+i+'-3_include" checked/></td>';
+            s+= '<td class="td_pktsel"><select id="kres_n'+i+'-4" class="sel_punkte"><input type="checkbox" class="_recalc_on_change" id="kres_n'+i+'-4_include" checked/></td>';
+            s += '</tr>';
+            $('tr._nebenfach:last').after(s);
+            
+            initSelect('tr._nebenfach:last');
+        }
+        
+        function selNeben_changed(e)
+        {
+            // remove the <leer> option
+            var targ;
+            if (!e) var e = window.event;
+            if (e.target) targ = e.target;
+                else if (e.srcElement) targ = e.srcElement;
+            if (targ.nodeType == 3) // defeat Safari bug
+                targ = targ.parentNode;
+            $(targ).find('.placeholder').remove();
+            
+            
+            // remove the selected option in other <selects>
+            //$(targ).addClass('changed');
+           // var selected_v = $(targ).find('option:selected').val();
+            //$('select.sel_neben[class!="changed"] option[value="'+selected_v+'"]').remove();
+            //$(targ).removeClass('changed');
+            
+            
+            addNeben();
+            recalc();
+            
+        }
+        
+        function selFs_changed(e)
+        {
+            $("#abifach_fs").text($("#kfach_fs option:selected").text());
+        }
+    </script>
+    <h1>Punkterechner Abi '13</h1>
+    <div id="container">
+        <div id="block1">
+            <h2>Block I</h2>
+            <h3>Leistungen aus den Kursen</h3>
+            <table id="t_blk1kernfaecher" width="100%">
+                <colgroup>
+                    <col width="30%" />
+                    <col width="17.5%"/>
+                    <col width="17.5%"/>
+                    <col width="17.5%"/>
+                    <col width="17.5%"/>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>Fach</th>
+                        <th class="th_hj">1. HJ</th>
+                        <th class="th_hj">2. HJ</th>
+                        <th class="th_hj">3. HJ</th>
+                        <th class="th_hj">4. HJ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="space"/>
+                    <tr>
+                        <td>Deutsch</td>
+                        <td class="td_pktsel"><select id="kres_de1" class="sel_punkte"><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_de2" class="sel_punkte"><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_de3" class="sel_punkte"><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_de4" class="sel_punkte"><input type="checkbox" checked disabled/></td>
+                    </tr>
+                    <tr>
+                        <td>Mathe</td>
+                        <td class="td_pktsel"><select id="kres_ma1" class="sel_punkte"><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_ma2" class="sel_punkte"><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_ma3" class="sel_punkte"><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_ma4" class="sel_punkte"><input type="checkbox" checked disabled/></td>
+                    </tr>
+                    <tr>
+                        <td>[FS] <select id="kfach_fs" class="sel_spr"></select></td>
+                        <td class="td_pktsel"><select id="kres_fs1" class="sel_punkte"><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_fs2" class="sel_punkte"><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_fs3" class="sel_punkte"><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_fs4" class="sel_punkte"><input type="checkbox" checked disabled/></td>
+                    </tr>
+                    <tr>
+                        <td>[Kern1] <select id="kfach_k1" class="sel_kern1"></select></td>
+                        <td class="td_pktsel"><select id="kres_k1-1" class="sel_punkte"><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_k1-2" class="sel_punkte"><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_k1-3" class="sel_punkte"><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_k1-4" class="sel_punkte"><input type="checkbox" checked disabled/></td>
+                    </tr>
+                    <tr>
+                        <td>[Kern2] <select id="kfach_k2" class="sel_kern2"></select></td>
+                        <td class="td_pktsel"><select id="kres_k2-1" class="sel_punkte"><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_k2-2" class="sel_punkte"><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_k2-3" class="sel_punkte"><input type="checkbox" checked disabled/></td>
+                        <td class="td_pktsel"><select id="kres_k2-4" class="sel_punkte"><input type="checkbox" checked disabled/></td>
+                    </tr>
+                    <tr class="_nebenfach">
+                        <td>[Neben1] <select id="kfach_n1" class="sel_neben"></select></td>
+                        <td class="td_pktsel"><select id="kres_n1-1" class="sel_punkte"><input type="checkbox" class="_recalc_on_change" id="kres_n1-1_include" checked/></td>
+                        <td class="td_pktsel"><select id="kres_n1-2" class="sel_punkte"><input type="checkbox" class="_recalc_on_change" id="kres_n1-2_include" checked/></td>
+                        <td class="td_pktsel"><select id="kres_n1-3" class="sel_punkte"><input type="checkbox" class="_recalc_on_change" id="kres_n1-3_include" checked/></td>
+                        <td class="td_pktsel"><select id="kres_n1-4" class="sel_punkte"><input type="checkbox" class="_recalc_on_change" id="kres_n1-4_include" checked/></td>
+                    </tr>
+                    <tr class="space"/>
+                    <tr class="tr_ruleabove">
+                        <td class="strong">[Gesamt]</td>
+                        <td class="td_pktsel strong" id="kres_hj1">150</td>
+                        <td class="td_pktsel strong" id="kres_hj2">150</td>
+                        <td class="td_pktsel strong" id="kres_hj3">150</td>
+                        <td class="td_pktsel strong" id="kres_hj4">150</td>
+                    </tr>
+                    <tr class="space"/>
+                </tbody>
+            </table>
+        </div>
+        
+        <div id="block2">
+            <h2>Block II</h2>
+            <h3>Leistungen aus den Abiturpr&uuml;fungen</h3>
+            <div class="abifach">
+                <div class="abifach_name">Deutsch</div>
+                <div class="abifach_input">
+                    <select id="abires_deutsch" class="sel_punkte"></select> x4
+                </div>
+            </div>
+            <div class="abifach">
+                <div class="abifach_name">Mathe</div>
+                <div class="abifach_input">
+                    <select id="abires_mathe" class="sel_punkte"></select> x4
+                </div>
+            </div>
+            <div class="abifach">
+                <div class="abifach_name" id="abifach_fs">Englisch</div>
+                <div class="abifach_input">
+                    <select id="abires_fs" class="sel_punkte"></select> x4
+                </div>
+            </div>
+            <div class="abifach">
+                <div class="abifach_name">[Kernfach-S]</div>
+                <div class="abifach_input">
+                    <select id="abires_kernfach" class="sel_punkte"></select> x4
+                </div>
+            </div>
+            <div class="abifach">
+                <div class="abifach_name">[Mdl/SK]</div>
+                <div class="abifach_input">
+                    <select id="abires_mdl" class="sel_punkte"></select> x4
+                </div>
+            </div>
+        </div>
+        
+        <div id="ergebnisse">
+            <h2>Abiturergebnisse</h2>
+            <div id="d_ergebnisse">
+                <div class="t_left strong">Punkte Block I</div>
+                <div class="t_right" id="d_pktblk1">600</div>
+                
+                <div class="t_left strong">Punkte Block II</div>
+                <div class="t_right" id="d_pktblk2">300</div>
+                
+                <hr style="background: #930000; height: 2px; border: none;"/>
+                
+                <div class="t_left strong">Punkte Gesamt</div>
+                <div class="t_right" id="d_pktgesamt">900</div>
+                
+                <div class="t_left strong">Note</div>
+                <div class="t_right" id="d_notegesamt">1.0</div>
+                
+                <div class="t_clear"></div>
+            </div>
+        </div>
+        
+        <div id="log">
+            <h2>Log</h2>
+            <pre id="pre_log">[interface init] -> ok
+</pre>
+        </div>
+        <div class="t_clear"></div>
+    </div>
+</body>
+</html>
