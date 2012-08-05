@@ -193,10 +193,10 @@ BlockI.prototype.check = function() {
     // -> Bio/Ch/Ph COMPLICATED
 	if((this.kernfacher[3].name == 'bio')  || (this.kernfacher[3].name == 'ch') || (this.kernfacher[3].name == 'ph'))
 	{
-		$('#pre_log').append('<div class="normal">[i] 1. Kernfach ist NW</div>');
+		//$('#pre_log').append('<div class="normal">[i] 1. Kernfach ist NW</div>');
 		if(!((this.kernfacher[4].name == 'bio')  || (this.kernfacher[4].name == 'ch') || (this.kernfacher[4].name == 'ph'))) {
 			// we need only 4 more courses of NW in the nebenfacher
-			$('#pre_log').append('<div class="normal">[i] 2. Kernfach ist NICHT NW</div>');
+			//$('#pre_log').append('<div class="normal">[i] 2. Kernfach ist NICHT NW</div>');
 			// count the included ph, ch, bio nebenfacher and decide
 			var o_bioAsNF = isFachIn(this.nebenfacher, 'bio');
 			var o_chAsNF = isFachIn(this.nebenfacher, 'ch');
@@ -218,9 +218,29 @@ BlockI.prototype.check = function() {
 				$('#pre_log').append('<div class="problem">[!] Alle 8 naturwissenschaftlichen Kurse m&uuml;ssen ausgew&auml;hlt werden</div>');
 			}
 		} else {
-			$('#pre_log').append('<div class="normal">[i] 2. Kernfach ist NW</div>');
+			//$('#pre_log').append('<div class="normal">[i] 2. Kernfach ist NW</div>');
 		}
 		
+	} else { // keine NW als Kern
+		$('#pre_log').append('<div class="normal">[i] Keine NW als Kernfach</div>');
+		var o_bioAsNF = isFachIn(this.nebenfacher, 'bio');
+		var o_chAsNF = isFachIn(this.nebenfacher, 'ch');
+		var o_phAsNF = isFachIn(this.nebenfacher, 'ph');
+		if (o_bioAsNF.result) o_bioAsNF.count = countTrue(this.nebenfacher[o_bioAsNF.i].include);
+		if (o_chAsNF.result) o_chAsNF.count = countTrue(this.nebenfacher[o_chAsNF.i].include);
+		if (o_phAsNF.result) o_phAsNF.count = countTrue(this.nebenfacher[o_phAsNF.i].include);
+		var b_allOK = false;
+		var f_isOK = function(o){
+			if(o.result && (o.count == 4)) return true;
+			return false;
+		}
+		// bruteforce that shit
+		if(f_isOK(o_bioAsNF) && f_isOK(o_chAsNF)) b_allOK = true;
+		if(f_isOK(o_bioAsNF) && f_isOK(o_phAsNF)) b_allOK = true;
+		if(f_isOK(o_chAsNF) && f_isOK(o_phAsNF)) b_allOK = true;
+		if(!b_allOK) {
+			$('#pre_log').append('<div class="problem">[!] 2x4 naturwiss. Kurse m&uuml;ssen gew&auml;hlt werden</div>');
+		}
 	}
     
     
@@ -245,18 +265,21 @@ BlockI.prototype.check = function() {
       $('#kres_n'+(o_isFachIn.i+1)+'-4_include').attr('disabled', true);
       $('#kres_n'+(o_isFachIn.i+1)+'-4').attr('disabled', true);
     }
-    
-    // check if number of nebenfachkurse > or < 20
+
+	// check if number of nebenfachkurse > or < 20
     var n_nebenkurse = 0;
     for(var i = 0; i < this.nebenfacher.length; i++)
     {
       n_nebenkurse += countTrue(this.nebenfacher[i].include);
     }
     if(n_nebenkurse < 20) {
-      $("#pre_log").append('<div class="problem">[!] BlockI: <20 Nebenkurse gew&auml;hlt</div>');
+    	$("#pre_log").append('<div class="problem">[!] BlockI: <20 Nebenkurse gew&auml;hlt</div>');
     } else if(n_nebenkurse > 20) {
-      $("#pre_log").append('<div class="normal">[i] BlockI: >20 Nebenkurse gew&auml;hlt, <br/>Punkte werden runtergerechnet</div>');
+    	$("#pre_log").append('<div class="normal">[i] BlockI: >20 Nebenkurse gew&auml;hlt, <br/>Punkte werden runtergerechnet</div>');
+	  	$('#_nebenfacher_mehrals20').text('true');
     }
+	$('#_nebenfacher_count').text(n_nebenkurse);
+    
 }
 
 BlockI.prototype.setSums = function() {

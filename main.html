@@ -74,6 +74,7 @@
             s += '<option class="placeholder">&lt;leer&gt;</option>';
             s += '<option value="ch">Chemie</option>';
             s += '<option value="bio">Biologie</option>';
+			s += '<option value="ph">Physik</option>';
             s += '<option value="bk">BK/Mu</option>';
             s += '<option value="inf">Informatik</option>';
             s += '<option value="sp">Sport</option>';
@@ -81,9 +82,9 @@
             s += '<option value="ge">Geschi</option>';
             s += '<option value="rel">Reli/Ethik</option>';
             s += '<option value="sk">SK</option>';
-            s += '<option value="as">Astro</option>';
-            s += '<option value="ph">Phil</option>';
-            s += '<option value="ps">Psych</option>';
+            s += '<option value="as" class="_nur_zweiteshj">Astro</option>';
+            s += '<option value="ph" class="_nur_zweiteshj">Phil</option>';
+            s += '<option value="ps" class="_nur_zweiteshj">Psych</option>';
             $(root).find("select.sel_neben").html(s);
             $(root).find("select.sel_neben").change(selNeben_changed);
         }
@@ -98,11 +99,26 @@
             
             $("#d_pktblk1").text(blkI_punkte);
             $("#d_pktblk2").text(blkII_punkte);
-            $("#d_pktgesamt").text(blkII_punkte+blkI_punkte);
-            $("#d_notegesamt").text(getNoteByPunkte(blkII_punkte+blkI_punkte));
+
+			var ges_punkte = 0;
+			
+			if($('#_nebenfacher_mehrals20').text() == 'true') 
+			{
+				$('#_nebenfacher_mehrals20').text('');
+				var n_nebenfacher = parseInt($('#_nebenfacher_count').text());
+				blkI_punkte = Math.round((blkI_punkte / (20+n_nebenfacher)) * 40);
+			}
+			ges_punkte = blkI_punkte + blkII_punkte;
+			
+			$("#d_pktgesamt").text(ges_punkte);
+	        $("#d_notegesamt").text(getNoteByPunkte(ges_punkte));
             
             $("._recalc_on_change").off('change');
             $("._recalc_on_change").change(recalc);
+			
+			$('._nur_zweiteshj:selected').parent().parent().parent().find('td.td_pktsel:lt(2) select').attr('disabled', true);
+			$('._nur_zweiteshj:selected').parent().parent().parent().find('td.td_pktsel:lt(2) input').attr('disabled', true);
+			$('._nur_zweiteshj:selected').parent().parent().parent().find('td.td_pktsel:lt(2) input').removeAttr('checked');
         }
         
         function addNeben()
@@ -154,7 +170,7 @@
             $("#abifach_fs").text($("#kfach_fs option:selected").text());
         }
     </script>
-    <h1>Punkterechner Abi '13</h1>
+    <h1>Punkterechner Abi '13 (BW)</h1>
     <div id="container">
         <div id="block1">
             <h2>Block I</h2>
@@ -231,6 +247,8 @@
                     <tr class="space"><td></td><td></td><td></td><td></td><td></td></tr>
                 </tbody>
             </table>
+			<div id="_nebenfacher_mehrals20" style="display: none"></div>
+			<div id="_nebenfacher_count" style="display: none"></div>
         </div>
         
         <div id="block2">
@@ -296,7 +314,7 @@
         </div>
         <div class="t_clear"></div>
 		<div id="footer">
-			<div id="footer_l">Provided under the <a href="http://www.gnu.org/licenses/gpl-3.0-standalone.html">GPLv3</a></div>
+			<div id="footer_l">Provided under the <a href="http://www.gnu.org/licenses/gpl-3.0-standalone.html">GPLv3</a> (<a href="https://github.com/ssitaru/abirechner">src</a>)</div>
 			<div id="footer_r">Copyright 2012 by <a href="http://sebastian.sitaru.eu">Sebastian Sitaru</a></div>
 			
 		</div>
